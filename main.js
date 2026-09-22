@@ -10,7 +10,6 @@ const SOURCES = [
     {
         name: 'Fotocasa',
         url: 'https://www.fotocasa.es/es/alquiler/viviendas/valencia/todas-las-zonas/l',
-        isParticular: (html) => html.toLowerCase().includes('anunciante particular'),
         parse: ($) => {
             const items = [];
             $('.re-CardPackPremium, .re-CardPack').each((_, el) => {
@@ -20,7 +19,14 @@ const SOURCES = [
                 const relativeLink = $(el).find('a').attr('href');
                 const link = relativeLink ? `https://www.fotocasa.es${relativeLink}` : null;
 
-                items.push({ price, rooms, baths, link });
+                // Nueva detección de particular
+                const isParticular = $(el)
+                    .find('.re-CardAdvertiserType')
+                    .text()
+                    .toLowerCase()
+                    .includes('particular');
+
+                items.push({ price, rooms, baths, link, isParticular });
             });
             return items;
         },
@@ -28,7 +34,6 @@ const SOURCES = [
     {
         name: 'Milanuncios',
         url: 'https://www.milanuncios.com/alquiler-de-pisos-valencia/?orden=relevancia',
-        isParticular: (html) => html.toLowerCase().includes('particular'),
         parse: ($) => {
             const items = [];
             $('.aditem').each((_, el) => {
@@ -40,7 +45,14 @@ const SOURCES = [
                 const baths = bathsMatch ? parseInt(bathsMatch[0].replace(/\D/g, ''), 10) : 0;
                 const link = $(el).find('a').attr('href');
 
-                items.push({ price, rooms, baths, link });
+                // Nueva detección de particular
+                const isParticular = $(el)
+                    .find('.aditem-header')
+                    .text()
+                    .toLowerCase()
+                    .includes('particular');
+
+                items.push({ price, rooms, baths, link, isParticular });
             });
             return items;
         },
@@ -48,7 +60,6 @@ const SOURCES = [
     {
         name: 'Yaencontre',
         url: 'https://www.yaencontre.com/alquiler/viviendas/valencia',
-        isParticular: (html) => html.toLowerCase().includes('particular'),
         parse: ($) => {
             const items = [];
             $('.listing-item').each((_, el) => {
@@ -57,7 +68,14 @@ const SOURCES = [
                 const baths = parseInt($(el).find('.feature.baths').text().replace(/\D/g, ''), 10);
                 const link = $(el).find('a').attr('href');
 
-                items.push({ price, rooms, baths, link });
+                // Nueva detección de particular
+                const isParticular = $(el)
+                    .find('.owner-type')
+                    .text()
+                    .toLowerCase()
+                    .includes('particular');
+
+                items.push({ price, rooms, baths, link, isParticular });
             });
             return items;
         },
@@ -82,18 +100,18 @@ Actor.main(async () => {
                 item.price <= MAX_PRICE &&
                 item.rooms >= MIN_ROOMS &&
                 item.baths >= MIN_BATHS &&
-                src.isParticular(html)
+                item.isParticular
             );
 
-            filtered.forEach((r) => {
-                results.push({
+            results.push(
+                ...filtered.map((r) => ({
                     source: src.name,
                     price: r.price,
                     rooms: r.rooms,
                     baths: r.baths,
                     link: r.link,
-                });
-            });
+                }))
+            );
         } catch (err) {
             console.error(`Error en fuente ${src.name}:`, err.message);
         }
