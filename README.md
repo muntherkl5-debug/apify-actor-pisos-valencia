@@ -5,13 +5,13 @@ Este actor busca pisos de alquiler en Valencia que cumplan:
 - Máximo 1000 €/mes
 - Mínimo 2 habitaciones
 - Mínimo 1 baño
-- Solo anuncios de particulares (según texto detectado en la página)
+- Solo anuncios de particulares
 
-## Fuentes
+## Fuentes utilizadas
 
-- Fotocasa
-- Milanuncios
-- Yaencontre
+- Fotocasa  
+- Milanuncios  
+- Yaencontre  
 
 ## Salida
 
