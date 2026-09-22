@@ -1,5 +1,5 @@
 import { Actor } from 'apify';
-import cheerio from 'cheerio';
+import { load } from 'cheerio';
 import { gotScraping } from 'got-scraping';
 
 const MAX_PRICE = 1000;
@@ -73,7 +73,7 @@ Actor.main(async () => {
         try {
             const response = await gotScraping({ url: src.url });
             const html = response.body;
-            const $ = cheerio.load(html);
+            const $ = load(html);
 
             const parsed = src.parse($);
 
