@@ -38,10 +38,13 @@ const SOURCES = [
             $('.aditem').each((_, el) => {
                 const price = parseInt($(el).find('.aditem-price').text().replace(/\D/g, ''), 10);
                 const text = $(el).find('.aditem-detail').text();
+
                 const roomsMatch = text.match(/(\d+)\s*habi/gi);
                 const bathsMatch = text.match(/(\d+)\s*bañ/gi);
+
                 const rooms = roomsMatch ? parseInt(roomsMatch[0].replace(/\D/g, ''), 10) : 0;
                 const baths = bathsMatch ? parseInt(bathsMatch[0].replace(/\D/g, ''), 10) : 0;
+
                 const link = $(el).find('a').attr('href');
 
                 const isParticular = $(el)
@@ -110,4 +113,10 @@ Actor.main(async () => {
                 }))
             );
         } catch (err) {
-            console.error(`Error en fuente ${
+            console.error(`Error en fuente ${src.name}:`, err.message);
+        }
+    }
+
+    await Actor.pushData(results);
+    console.log(`Scraping completado. Total resultados: ${results.length}`);
+});
