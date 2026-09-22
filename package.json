@@ -1,7 +1,7 @@
 {
-  "name": "actor-pisos-valencia-particulares",
+  "name": "actor-milanuncios-api",
   "version": "1.0.0",
-  "description": "Actor de Apify para encontrar pisos de alquiler en Valencia (particulares, max 1000€, min 2 habitaciones, min 1 baño).",
+  "description": "Actor Apify que usa la API de Milanuncios para encontrar pisos particulares en Valencia.",
   "main": "main.js",
   "type": "module",
   "scripts": {
@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "apify": "^3.0.0",
-    "cheerio": "^1.0.0",
     "got-scraping": "^4.0.0"
   }
 }
