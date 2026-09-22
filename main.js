@@ -19,7 +19,6 @@ const SOURCES = [
                 const relativeLink = $(el).find('a').attr('href');
                 const link = relativeLink ? `https://www.fotocasa.es${relativeLink}` : null;
 
-                // Nueva detección de particular
                 const isParticular = $(el)
                     .find('.re-CardAdvertiserType')
                     .text()
@@ -45,7 +44,6 @@ const SOURCES = [
                 const baths = bathsMatch ? parseInt(bathsMatch[0].replace(/\D/g, ''), 10) : 0;
                 const link = $(el).find('a').attr('href');
 
-                // Nueva detección de particular
                 const isParticular = $(el)
                     .find('.aditem-header')
                     .text()
@@ -68,7 +66,6 @@ const SOURCES = [
                 const baths = parseInt($(el).find('.feature.baths').text().replace(/\D/g, ''), 10);
                 const link = $(el).find('a').attr('href');
 
-                // Nueva detección de particular
                 const isParticular = $(el)
                     .find('.owner-type')
                     .text()
@@ -113,10 +110,4 @@ Actor.main(async () => {
                 }))
             );
         } catch (err) {
-            console.error(`Error en fuente ${src.name}:`, err.message);
-        }
-    }
-
-    await Actor.pushData(results);
-    console.log(`Scraping completado. Total resultados: ${results.length}`);
-});
+            console.error(`Error en fuente ${
