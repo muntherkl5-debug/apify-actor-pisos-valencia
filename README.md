@@ -1,27 +1,39 @@
-# Actor: Pisos de alquiler en Valencia (solo particulares)
+# Actor: Pisos particulares en Valencia (API Milanuncios)
 
-Este actor busca pisos de alquiler en Valencia que cumplan:
+Este actor usa **la API oficial de Milanuncios** para obtener pisos de alquiler en Valencia que cumplan:
 
-- Máximo 1000 €/mes
+- Máximo 1000 €
 - Mínimo 2 habitaciones
 - Mínimo 1 baño
-- Solo anuncios de particulares
+- Solo particulares
 
-## Fuentes utilizadas
+## Ventajas
 
-- Fotocasa  
-- Milanuncios  
-- Yaencontre  
+- Funciona en `LIMITED_PERMISSIONS`
+- No depende de HTML dinámico
+- No necesita navegador
+- Resultados 100% reales
+
+## Cómo usarlo
+
+1. Crea un repositorio GitHub con:
+   - `main.js`
+   - `package.json`
+   - `README.md`
+
+2. En Apify → **Create Actor**
+3. Selecciona **Connect GitHub repository**
+4. Ejecuta el actor
 
 ## Salida
 
-El actor guarda los resultados en el dataset por defecto de Apify, con objetos tipo:
+Cada anuncio tiene:
 
 ```json
 {
-  "source": "Fotocasa",
-  "price": 950,
+  "source": "Milanuncios API",
+  "price": 750,
   "rooms": 2,
   "baths": 1,
-  "link": "https://www.fotocasa.es/..."
+  "link": "https://www.milanuncios.com/..."
 }
